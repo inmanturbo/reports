@@ -35,7 +35,11 @@
 
 ## in a seperate terminal 
 
-`cd reports/public`
+`cd reports/`
+
+`composer install`
+
+`cd public/`
 
 `php -S localhost:8888`
 
