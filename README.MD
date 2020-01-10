@@ -33,7 +33,7 @@
 
 `php -S localhost:3000`
 
-#in a seperate terminal 
+## in a seperate terminal 
 
 `cd reports/public`
 
