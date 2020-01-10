@@ -4,7 +4,7 @@
 
 `cd reports`
 
-`mysql -h host -u user -p`
+`mysql -h host -u username -p`
 
 `CREATE DATABASE devwork;`
 
