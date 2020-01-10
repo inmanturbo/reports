@@ -1,6 +1,6 @@
 ## NOTE
 
-It is not recommended that you use this repo as is. This is old code put here in hopes for collaboration in its improvement.
+It is not recommended that anyone use this repo as is. This is old code put here in hopes for collaboration in its improvement.
 
 ## Reports
 
