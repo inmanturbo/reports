@@ -12,16 +12,16 @@
 
 `mysql -u username -p devwork < mysqldump/devwork.sql`
 
+## Start server
+
+`php -S localhost:3000`
+
 ## Edit includes/pdo_connect.php
 
 `$c_username = "username";`
 `$c_password = "password";`
 `$c_host= "host";`
 `$c_database = "devwork";`
-
-## Start server
-
-`php -S localhost:3000`
 
 ## in a seperate terminal 
 
