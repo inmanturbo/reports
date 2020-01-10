@@ -1,3 +1,7 @@
+## NOTE
+
+It is not recommended that you use this repo as is. This is old code put here in hopes for collaboration in its improvement.
+
 ## Reports
 
 `git clone https://github.com/inmanturbo/reports.git`
