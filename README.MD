@@ -43,6 +43,6 @@
 
 `php -S localhost:8888`
 
-navigate to
+## navigate to
 
 `http:localhost:3000/reports.php`
