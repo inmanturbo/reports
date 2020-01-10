@@ -1,4 +1,4 @@
-#Reports
+## Reports
 
 `git clone repo`
 
@@ -12,14 +12,14 @@
 
 `mysql -u username -p devwork < mysqldump/devwork.sql`
 
-#Edit includes/pdo_connect.php
+## Edit includes/pdo_connect.php
 
 `$c_username = "devwork";`
 `$c_password = "password";`
 `$c_host= "host";`
 `$c_database = "devwork";`
 
-#Edit reports/.env
+##  Edit reports/.env
 
 
 `DB_CONNECTION=mysql`
@@ -29,7 +29,7 @@
 `DB_USERNAME=user`
 `DB_PASSWORD=password`
 
-#Start server
+## Start server
 
 `php -S localhost:3000`
 
