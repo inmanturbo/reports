@@ -14,7 +14,7 @@
 
 ## Edit includes/pdo_connect.php
 
-`$c_username = "devwork";`
+`$c_username = "username";`
 `$c_password = "password";`
 `$c_host= "host";`
 `$c_database = "devwork";`
@@ -26,7 +26,7 @@
 `DB_HOST=host`
 `DB_PORT=3306`
 `DB_DATABASE=devwork`
-`DB_USERNAME=user`
+`DB_USERNAME=username`
 `DB_PASSWORD=password`
 
 ## Start server
