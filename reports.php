@@ -114,6 +114,7 @@ $(document).ready(function() {
 $color1 = "#FFFFFF";  
 $color2 = "#F2F2F2";  
 $row_count = 0; 
+$row_color = $row_color??'';
 
 $q = $_GET["q"]; if(!empty($q)) { 
        $stmt= $pdo->query ("SELECT * FROM reports WHERE id = '{$q}'"); $background = "background-color:"; } 
