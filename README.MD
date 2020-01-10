@@ -1,8 +1,8 @@
 ## Reports
 
-`git clone repo`
+`git clone https://github.com/inmanturbo/reports.git`
 
-`cd repo`
+`cd reports`
 
 `mysql -h host -u user -p`
 
