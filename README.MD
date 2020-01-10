@@ -19,16 +19,6 @@
 `$c_host= "host";`
 `$c_database = "devwork";`
 
-##  Edit reports/.env
-
-
-`DB_CONNECTION=mysql`
-`DB_HOST=host`
-`DB_PORT=3306`
-`DB_DATABASE=devwork`
-`DB_USERNAME=username`
-`DB_PASSWORD=password`
-
 ## Start server
 
 `php -S localhost:3000`
@@ -39,9 +29,21 @@
 
 `composer install`
 
+`cp -prv .env.example .env`
+
 `cd public/`
 
 `php -S localhost:8888`
+
+##  Edit reports/.env
+
+
+`DB_CONNECTION=mysql`
+`DB_HOST=host`
+`DB_PORT=3306`
+`DB_DATABASE=devwork`
+`DB_USERNAME=username`
+`DB_PASSWORD=password`
 
 ## navigate to
 
