@@ -1,28 +1,31 @@
 <?php
-include "includes/pdo_start_admin.php";
+include("header.php");
+include("includes/pdo_start_admin.php"); 
 // You Are Now Connected - Session Started
-
-$chkbox    = $_POST[F1];
-$TableName = $_POST[F2];
-$FieldName = $_POST[F3];
-$RecordNo  = $_POST[F4];
+if(isset($_POST['F1']) || isset($_POST['F2']) || isset($_POST['F3']) || isset($_POST['F4']) || isset($_POST['table_name']) || isset($_POST['RecordNo']) || isset($_POST['ReportName']) || isset($_POST['NoRows1']) || isset($_POST['NoRows2']) || isset($_POST['NoRows3']) || isset($_POST['NoRows4']))
+{
+$chkbox    = $_POST['F1'];
+$TableName = $_POST['F2'];
+$FieldName = $_POST['F3'];
+$RecordNo  = $_POST['F4'];
 $Active    = 'checked';
 $RowColor  = '#ffffff';
-
-$ReportTable = $_POST[table_name];
-$SubId       = $_POST[RecordNo];
-$ReportName  = $_POST[ReportName];
-$NoRows1  = $_POST[NoRows1];
-$NoRows2  = $_POST[NoRows2];
-$NoRows3  = $_POST[NoRows3];
-$NoRows4  = $_POST[NoRows4];
-
-
+$ReportTable = $_POST['table_name'];
+$SubId       = $_POST['RecordNo'];
+$ReportName  = $_POST['ReportName'];
+$NoRows1  = $_POST['NoRows1'];
+$NoRows2  = $_POST['NoRows2'];
+$NoRows3  = $_POST['NoRows3'];
+$NoRows4  = $_POST['NoRows4'];
+}
+else{
+  
+}
 // MySQL extras
 include "includes/pdo_connect.php";
 include 'createFunction.php';
-
-if ($_POST[Save]) { if ($_POST['insert_id']) {
+if (isset($_POST['Save'])) { 
+  if ($_POST['insert_id']) {
     update($_POST, $_POST['table_name'],$_POST['insert_id'], $pdo ); 
 } 
 else { 
@@ -34,7 +37,7 @@ $order = 100;
     $pdo->query("INSERT INTO reports_fields ( ReportTable, FieldName, RecordNo, LabelHead, LabelFoot, sort, Active, RowColor ) VALUES ('$TableName[$line_no]','$FieldName[$line_no]','$RecordNo[$line_no]','$FieldName[$line_no]','$FieldName[$line_no]','$order', '$Active','$RowColor' ) ");
     
   //$stmt= $pdo->prepare("INSERT INTO reports_fields ( ReportTable, FieldName ) VALUES ('$TableName[$line_no]','$FieldName[$line_no]'  ) ");
-$order++; 
+     $order++; 
   }     
      
 }
@@ -43,38 +46,9 @@ header("Location: ./reports_entry.php?RecordNo=$SubId");
 
 ?>
 <html>
-
 <head>
 <title>Custom Reports</title>
-<script type="text/javascript">
-function showUser(str)
-{
-if (str=="")
-  {
-  document.getElementById("txtHint").innerHTML="";
-  return;
-  }
-if (window.XMLHttpRequest)
-  {// code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
-  }
-else
-  {// code for IE6, IE5
-  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-xmlhttp.onreadystatechange=function()
-  {
-  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-    document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
-    }
-  }
-xmlhttp.open("GET","reports_fields.php?q="+str,true);
-xmlhttp.send();
-}
-</script>
-
-
+<script src="js/script.js"></script>
 </head>
 <body>
 
@@ -99,12 +73,12 @@ require("includes/pdo_connect.php");
 $q = ($_GET["q"]);
  $stmt= $pdo->query ("SHOW TABLES FROM $c_database"); 
    while($row=$stmt->fetch(PDO::FETCH_NUM)){
- 	echo "<option value='$row[0]' style='border-radius:15px; background-color:yellow; font-family: Arial; color: #0000FF; font-size: 15px; font-weight: bold'>$row[0]</option>" ;
-		}
-  
- echo "</select>"; 
-
-?>
+     ?>
+     <option value='<?php echo $row[0] ?>' style='border-radius:15px; background-color:yellow; font-family: Arial; color: #0000FF; font-size: 15px; font-weight: bold'><?php echo $row[0]; ?></option> ;
+  <?php
+    }
+  ?>
+  </select>
 <br>
 
 

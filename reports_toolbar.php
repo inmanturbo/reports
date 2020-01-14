@@ -1,37 +1,9 @@
 <style>
-.toolbarContainer {
-  // float: left !important;
-  height: 28px ;
-  width: 100%;
-  border: 0px solid red;
-  margin: 0px;
-  padding-right: 5px;
-  vertical-align: middle !important; 
-  display: inline-block !important ;
-}
-.toolbarContent {
-  height: 22px ;
-  margin-right: 0px;
-  margin-bottom 0px;
-  font: normal 12px arial, sans-serif; color: black;
-  vertical-align: middle !important; 
-  display: inline-block !important ;
-}
-.reportTitle {
-  border: 0px solid DarkGrey; 
-  height: 16px !important; 
-  /* padding-left: 2px; */
-  margin-right: 10px !important;
-  padding: 4px !important; 
-  font-family: Arial !important; font-size: 14pt !important; 
-  color: PowderBlue !important ; 
-  font-weight: bold !important; 
-}
-.toolbarContent:hover {
-	background-color: PowderBlue ;
-}
+
 </style> 
- 
+ <?php 
+ include("header.php");
+ ?>
 <!-- CUSTOM TOOLBAR ITMS LOADE IN THIS ORDER  -->
 
 <!-- PAGE TITLE FIRST--> 

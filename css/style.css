@@ -1,0 +1,236 @@
+
+    .toolbar {
+        padding: 0;
+        margin: 0;
+        width: 71.5%;
+        float:left;
+        overflow: hidden;
+        border: 0px solid blue;
+    }
+    .dt-buttons{
+        width: 11.5%;
+        float: right;
+        border: 0px solid blue;
+        margin: 0 0 0 0;
+    }
+    #example_filter{
+        width:13%; 
+        float:right;
+        margin: 0 0 0 0;
+        padding: 0;
+        border: 0px solid blue;
+        font-family: Arial !important;
+	    font-size: 12px !important;
+    }
+/*report Ajax Css */
+    body {
+        /*font: 95%/1.45em "Helvetica Neue", HelveticaNeue, Verdana, Arial, Helvetica, sans-serif; */
+        margin: 0;
+        padding: 0;
+        color: green;
+        /*background-color: white; */
+        /* Set "my-sec-counter" to 0 */
+          counter-reset: my-sec-counter;
+      }
+      .qwSelect {
+        background-color: White !important;
+        border: 0px solid White !important;
+        font-family: Arial !important;
+        font-size: 0px !important;
+        padding: 0px !important;
+        margin-right: 0px !important;
+    }
+    
+    .qwCustomSelect {
+        /* width: 210px !important; */
+        height: 26px; 
+        font-size: 15px !important;
+        font-weight: bold !important;
+        color: Red ; 
+        line-height: 1em; 
+        text-indent: 0.01px; 
+        text-overflow: ellipsis;  
+        border-radius: 2px !important;
+        border: 1px solid DarkGrey !important;
+        padding: 2px !important; 
+        margin: 0px !important;	
+        cursor:pointer !important;
+    }
+    .qwButton {
+        height: 25px !important; 
+        background-color: Gainsboro !important;
+        -moz-border-radius:5px !important;
+        -webkit-border-radius:5px;/*!important*/
+        border-radius:5px !important;
+        border: 1px solid DarkGrey !important;
+        display:inline-block ;
+        /*float: right;*/
+        cursor:pointer !important;
+        color: #333333 !important; /* #ffffff;  */
+        font-family: Arial !important;
+        font-size: 12px !important;
+        font-weight: bold !important;
+        letter-spacing: 1px !important;   	
+        padding: 2px 5px !important;
+        margin-top: 0px !important;	
+    }
+    .qwMemo {
+        background-color: White !important;
+        /* -moz-border-top-right-radius:5px !important;*/
+        /*// -webkit-border-top-right-radius:5px;!important */
+        /* border-top-right-radius 10px !important; */
+        /* border-radius: 20px !important; */
+        border: 0px solid Gainsboro !important;
+        /* display:inline-block ; */
+        /* cursor:pointer !important; */
+        color: DarkGreen !important; /* #ffffff; */
+        font-family: Arial !important;
+        font-size: 12px !important;
+        /* font-weight: bold !important; */
+        letter-spacing: 1px !important;   	
+        padding: 2px !important;
+        margin-right: 5px !important;	
+    }
+    .qwNotice {
+        background-color: White !important;
+        /* -moz-border-top-right-radius:5px !important;  */
+        /* -webkit-border-top-right-radius:5px;!important */
+        /* border-top-right-radius 10px !important;  */
+        /* // border-radius: 20px !important; */
+        border: 0px solid Gainsboro !important;
+        /* // display:inline-block ; */
+        /* // cursor:pointer !important; */
+        color: Blue !important; /* #ffffff;*/
+        font-family: Arial !important;
+        font-size: 15px !important;
+        font-weight: bold !important;
+        letter-spacing: 1px !important;   	
+        padding: 2px !important;
+        margin-right: 5px !important;	
+    }
+    .qwButton:hover {
+        background-color: DarkTurquoise !important ;
+    }
+
+    .qw-search::after {
+        /* Decrement "my-sec-counter" by 1 */
+        counter-increment: my-sec-counter -1;
+        content: counter(my-sec-counter);
+    }
+
+    .qw-container{
+        /* PAGANATION   */
+        font: 100%/1.85em "Helvetica Neue", HelveticaNeue, Verdana, Arial, Helvetica, sans-serif;
+        padding: 10px 25px;
+        font-family: Arial !important;;
+        font-weight: bold !important;; 
+        font-size: 15px !important;; 
+        color: green !important; ;
+        }
+
+        table.dataTable thead th {
+            white-space: nowrap;
+             text-align: left !important;
+            color: Blue !important;
+            font-weight: bold;
+          }
+
+          
+
+    /*  Report Tool Bar Css */
+
+    .toolbarContainer {
+        /* float: left !important;*/
+        height: 28px ;
+        width: 100%;
+        border: 0px solid red;
+        margin: 0px;
+        padding-right: 5px;
+        vertical-align: middle !important; 
+        display: inline-block !important ;
+      }
+      .toolbarContent {
+        height: 22px ;
+        margin-right: 0px;
+        margin-bottom: 0px;
+        font: normal 12px arial, sans-serif; color: black;
+        vertical-align: middle !important; 
+        display: inline-block !important ;
+      }
+      .reportTitle {
+        border: 0px solid DarkGrey; 
+        height: 16px !important; 
+        /* padding-left: 2px; */
+        margin-right: 10px !important;
+        padding: 4px !important; 
+        font-family: Arial !important; font-size: 14pt !important; 
+        color: PowderBlue !important ; 
+        font-weight: bold !important; 
+      }
+      .toolbarContent:hover {
+          background-color: PowderBlue ;
+      }
+
+/*******Custom *********/
+div#example_wrapper {
+    width: 80%;
+    margin: 0 auto;
+    display: block;
+    padding: 11px;
+}
+table#example th {
+    text-align: center !important;
+}
+table#example td {
+    text-align: center;
+}
+table#example th {
+    color: #fff !important;
+}
+table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+#example_filter {
+    width: 21%;
+    float: right;
+    margin: 0 0 0 0;
+    padding: 0;
+    border: 0px solid blue;
+    font-family: Arial !important;
+    font-size: 15px !important;
+}
+span.ui.input input {
+    height: 38px;
+    border: 1px solid #ccc;
+}
+div.dataTables_wrapper div.dataTables_length select {
+    width: 58px;
+    height: 33px;
+    text-align: center;
+}
+div.dataTables_wrapper div.dataTables_length label {
+    font-size: 16px;
+    text-transform: capitalize;
+}
+table#example th {
+    text-transform: uppercase;
+}
+table#reports_entry {
+    margin: 0 auto !important;
+    display: block;
+    padding: 11px;
+    border: none;
+}
+table#server-setting tr {
+    height: 55px;
+}
+table#server-setting p {
+    font-size: 13px;
+    font-weight: 100;
+}
+table#reports_notes td {
+    height: 30px;
+}
+table#reports_entry {
+    margin: 0 auto;
+}

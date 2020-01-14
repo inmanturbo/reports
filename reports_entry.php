@@ -1,24 +1,22 @@
 <?php
 require("includes/pdo_start_admin.php");
 // You Are Now Connected - Session Started
-
 // SAVE THIS FOR STATIC HEADING IN A LOOP
 // if($no == 0){ echo "Show this once"; $no=1 ; } ;
-
-
+include("function.php");
 include 'createFunction.php';
 // get value for this record
 $formid = $_GET["RecordNo"];
-
+$table='reports_fields';
 // select * from table order by col limit 1;
-
-$stmt2= $pdo->query ("SELECT * FROM `reports_fields` WHERE RecordNo ='{$formid}' AND NOT FieldName = 'MANAGE' ORDER BY sort limit 1");
+$stmt2=select($formid,$table,$pdo);
  while($col=$stmt2->fetch(PDO::FETCH_OBJ)){
     // Ajax db Key id
-    $keyid = $col->FieldName; // saves to key value in reports
+     $keyid = $col->FieldName; // saves to key value in reports
 }
 
-if ($_POST['Save']) { if ($_POST['insert_id']) {
+if (isset($_POST['Save'])) {
+   if ($_POST['insert_id']) {
      update($_POST,  $_POST['table_name'], $_POST['insert_id'],  $pdo );
 
 // UPDATE COLUMN FIELD VALUES
@@ -56,7 +54,7 @@ if ($_POST['Save']) { if ($_POST['insert_id']) {
        RowSumNO   = '$RowSumNO',
        RowColor   = '$RowColor',
        opacity   = '$opacity'              
-       WHERE id   = '$id' ");
+       WHERE id   = '$id'");
 }}}
 
 else {
@@ -73,7 +71,8 @@ header("Location: ./reports_entry.php?RecordNo=$returnid");
 var YesOrNo = (function() {
   if(document.Save.Active.checked) {
      document.Save.Active.value = 'checked';
-  } });
+  } 
+});
   var YesOrNo = (function() {
   if(document.Save.RowSumCK.checked) {
      document.Save.RowSumCK.value = 'checked';
@@ -87,7 +86,10 @@ var YesOrNo = (function() {
 </script>
 
 </head>
-<div width="650"  >
+<div style='width: 100%;
+    background-color: white;
+    float: left;
+    display: block;'>
 <table border="0" width="350" style="border-collapse: collapse" cellpadding="0">
 <tr>
 <form name='Save' value='Save'  action="<?php print $_SERVER['PHP_SELF']?>" method="post" >
@@ -96,24 +98,7 @@ var YesOrNo = (function() {
 <?php
  $stmt= $pdo->query ("SELECT * FROM reports WHERE RecordNo = '{$formid}'");
    while($row=$stmt->fetch(PDO::FETCH_OBJ)){
-$report = $row;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ $report = $row;
 }
 if ( $report->KeyValue == 'id' ) { $thisValue = $report->id; } else { $thisValue = $report->RecordNo; }
 
@@ -131,14 +116,14 @@ if ( $report->KeyValue == 'id' ) { $thisValue = $report->id; } else { $thisValue
      <input type='hidden' name='UpdatedBy'   value="<?php if ($report->id > 0) { echo 'Updated by ' . $username; } Else { echo 'Original' ;      } ?>">
      <input type='hidden' name='ReportTable' value='<?php print $report->ReportTable ?>'>
 
-<table border="1" width="775" cellspacing="2" cellpadding="2" style="border-collapse: collapse; font-size: 8pt; font-family: Arial; font-weight: bold" >
+<table id="reports_entry" border="1" width="775" cellspacing="2" cellpadding="2" style="border-collapse: collapse; font-size: 8pt; font-family: Arial; font-weight: bold; margin: 0 auto;" >
 <tr>
 <td valign="top">
-<table border="1" width="775"  height='100' cellpadding="2" style="font-size: 8pt; font-family: Arial; font-weight: bold" bordercolor="#DCDACD" >
+<table class="inner_reports_entry" border="1" width="775"  height='100px' cellpadding="2" style="font-size: 8pt; font-family: Arial; font-weight: bold" bordercolor="#DCDACD" >
   <tr>
     <td bgcolor="#FFFFFF" width="365">
       <table border="0" width="300" cellpadding="0" style="border-collapse: collapse">
-		<tr>
+		<tr style="height: 40px; text-align: center;">
 			<td width="27">
 			<p align="center" style="margin: 0 5px">
 			<img border="0" src="themes/icon18/5006.jpg" width="16" height="16"></td>
@@ -147,7 +132,7 @@ if ( $report->KeyValue == 'id' ) { $thisValue = $report->id; } else { $thisValue
 		</table>
 	</td>
       <td width="448" bgcolor="#FFFFFF">
-      <p align="right">
+      <p align="center">
 
 <input type="button" value="Open Report" onClick=window.location='reports_ajax.php?RecordNo=<?php print $report->RecordNo ?>'>
 <input type="submit" value="Save" name="Save" >&nbsp;
@@ -159,43 +144,46 @@ if ( $report->KeyValue == 'id' ) { $thisValue = $report->id; } else { $thisValue
       <table border="1" width="365" height='10' style="font-size: 8pt; font-family: Arial; font-weight: bold; border-collapse: collapse" cellspacing="1" bordercolor="#DCDACD">
 		<tr>
     <td bgcolor="#F0F0F0" colspan="2">
-      <p style="margin: 0 5px"><font size="1" color="#800000">Report name and
+      <p style="margin: 0 5px"><font size="3" color="#800000">Report name and
 		URL links to manage records</font></td>
       	</tr>
 		<tr>
     <td style="width: 91px" bgcolor="#FFFFFF">
       <p style="margin:0 5px; ">
-      <span style="font-size: 11px">Report Name</span></td>
+      <span style="font-size: 13px; font-weight:100;">Report Name</span></td>
       <td width="257" bgcolor="#FFFFFF">
-      <p style="margin:0 5px; ">
-      <input name="ReportName" type="text" style="width: 240; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial" value="<?php print $report->ReportName ?>"></td>
+      <p style="margin:10px 13px; ">
+      <input name="ReportName" type="text" style="width: 240; height: 34; border: 1px solid #ccc ; font-size: 13px; font-family:Arial" value="<?php print $report->ReportName ?>"></td>
       	</tr>
 		<tr>
     <td style="width: 91px" bgcolor="#FFFFFF">
       <p style="margin:0 5px; ">
-      <span style="font-size: 11px">Report Title</span></td>
+      <span style="font-size: 13px; font-weight:100;">Report Title</span></td>
       <td width="257" bgcolor="#FFFFFF">
-      <p style="margin:0 5px; ">
-      <input name="ReportTitle" type="text" style="width: 240; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial"  value="<?php print $report->ReportTitle ?>"></td>
+      <p style="margin:10px 13px; ">
+      <input name="ReportTitle" type="text" style="width: 240; height: 34; border: 1px solid #ccc ; font-size: 13px; font-family:Arial"  value="<?php print $report->ReportTitle ?>"></td>
       	</tr>
 
 		<tr>
     <td style="width: 91px" bgcolor="#FFFFFF">
       <p style="margin:0 5px; ">
-      <span style="font-size: 11px">Search Field</span></td>
+      <span style="font-size: 13px; font-weight:100;">Search Field</span></td>
       <td width="257" bgcolor="#FFFFFF">
-      <p style="margin:0 5px; ">
+      <p style="margin:10px 13px; ">
 
 
-<select type='text' name='where_column' style=' width: 150; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial' >
+<select type='text' name='where_column' style=' width: 240; height: 34; border: 1px solid #ccc ; font-size: 13px; font-family:Arial' >
 
 <option value='<?php print $report->where_column ?>' ><?php print $report->where_column?></option>
 <option></option>
 <?php
  $stm2= $pdo->query ("SHOW COLUMNS FROM $report->ReportTable");
    while($select=$stm2->fetch(PDO::FETCH_ASSOC)){
-     echo "<option value='$select[Field]' style='border-radius:15px; background-color:yellow; font-family: Arial; color: #0000FF; font-size: 15px; font-weight: bold'>$select[Field]</option>";
- }
+     //print_r($select)
+     ?>
+      <option value="<?php echo $select['Field'] ?>" style='border-radius:15px; background-color:yellow; font-family: Arial; color: #0000FF; font-size: 15px; font-weight: bold'><?php echo $select['Field'] ?></option>
+ <?php
+    }
 ?>
 </select>
       </td>
@@ -203,10 +191,10 @@ if ( $report->KeyValue == 'id' ) { $thisValue = $report->id; } else { $thisValue
 		<tr>
     <td style="width: 91px" bgcolor="#FFFFFF">
       <p style="margin:0 5px; ">
-      <span style="font-size: 11px">Operator</span></td>
+      <span style="font-size: 13px; font-weight:100;">Operator</span></td>
       <td width="257" bgcolor="#FFFFFF">
-      <p style="margin:0 5px; ">
-      <select type='text' name='operand' style=' width: 150; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial' >
+      <p style="margin:10px 13px; ">
+      <select type='text' name='operand' style=' width: 240; height: 34; border: 1px solid #ccc ; font-size: 11px; font-family:Arial' >
 
 <option value='<?php print $report->operand ?>' ><?php print $report->operand ?></option>
 <option></option>
@@ -223,18 +211,18 @@ if ( $report->KeyValue == 'id' ) { $thisValue = $report->id; } else { $thisValue
 		<tr>
     <td style="width: 91px" bgcolor="#FFFFFF">
       <p style="margin:0 5px; ">
-      <span style="font-size: 11px">Search For</span></td>
+      <span style="font-size: 13px; font-weight:100;">Search For</span></td>
       <td width="257" bgcolor="#FFFFFF">
-      <p style="margin:0 5px; ">
-      <input name="where_value" type="text" style="width: 240; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial"  value="<?php print $report->where_value ?>"></td>
+      <p style="margin:10px 13px; ">
+      <input name="where_value" type="text" style="width: 240; height: 34; border: 1px solid #ccc ; font-size: 13px; font-family:Arial"  value="<?php print $report->where_value ?>"></td>
       	</tr>
 		<tr>
-    <td bgcolor="#FFFFFF" colspan="1">
+    <td bgcolor="#FFFFFF" colspan="1" style="font-size: 13px">
     Search Active
   </td>
   <td width="257" bgcolor="#FFFFFF">
-      <p style="margin:0 5px; ">
-      <select type='text' name='add_where' style=' width: 150; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial' >
+      <p style="margin:10px 13px; ">
+      <select type='text' name='add_where' style=' width: 240; height: 34; border: 1px solid #ccc ; font-size: 13px; font-family:Arial' >
       <option value='<?php echo $report->add_where   ?>' style='border-radius:15px; background-color:yellow; font-family: Arial; color: #0000FF; font-size: 15px; font-weight: bold'><?php echo $report->add_where ?></option>
       <option value='yes' style='border-radius:15px; background-color:yellow; font-family: Arial; color: #0000FF; font-size: 15px; font-weight: bold'>yes</option>
       <option value='no' style='border-radius:15px; background-color:yellow; font-family: Arial; color: #0000FF; font-size: 15px; font-weight: bold'>no</option>
@@ -245,11 +233,11 @@ if ( $report->KeyValue == 'id' ) { $thisValue = $report->id; } else { $thisValue
 
 		<tr>
     <td bgcolor="#FFFFFF" colspan="1">
-    <span style="font-size: 11px;margin:0 5px;">Date Range?</span>
+    <span style="font-size: 13px; font-weight:100; margin:0 5px;">Date Range?</span>
   </td>
   <td width="257" bgcolor="#FFFFFF">
-      <p style="margin:0 5px; ">
-      <select type='text' name='date_range' style=' width: 150; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial' >
+      <p style="margin:10px 13px; ">
+      <select type='text' name='date_range' style=' width: 240; height: 34; border: 1px solid #ccc ; font-size: 13px; font-family:Arial' >
       <option value='<?php echo $report->date_range   ?>' style='border-radius:15px; background-color:yellow; font-family: Arial; color: #0000FF; font-size: 15px; font-weight: bold'><?php echo $report->date_range ?></option>
       <option value='yes' style='border-radius:15px; background-color:yellow; font-family: Arial; color: #0000FF; font-size: 15px; font-weight: bold'>yes</option>
       <option value='no' style='border-radius:15px; background-color:yellow; font-family: Arial; color: #0000FF; font-size: 15px; font-weight: bold'>no</option>
@@ -261,18 +249,18 @@ if ( $report->KeyValue == 'id' ) { $thisValue = $report->id; } else { $thisValue
 		<tr>
     <td style="width: 91px" bgcolor="#FFFFFF">
       <p style="margin:0 5px; ">
-      <span style="font-size: 11px">Date From</span></td>
+      <span style="font-size: 13px; font-weight:100;">Date From</span></td>
       <td width="257" bgcolor="#FFFFFF">
-      <p style="margin:0 5px; ">
-      <input name="date_from" type="date" style="width: 150; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial"  value="<?php print $report->date_from ?>"></td>
+      <p style="margin:10px 13px; ">
+      <input name="date_from" type="date" style="width: 240; height: 34; border: 1px solid #ccc ; font-size: 13px; font-family:Arial"  value="<?php print $report->date_from ?>"></td>
       	</tr>
 		<tr>
     <td style="width: 91px" bgcolor="#FFFFFF">
       <p style="margin:0 5px; ">
-      <span style="font-size: 11px">Date To</span></td>
+      <span style="font-size: 13px">Date To</span></td>
       <td width="257" bgcolor="#FFFFFF">
-      <p style="margin:0 5px; ">
-      <input name="date_to" type="date" style="width: 150; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial"  value="<?php print $report->date_to ?>"></td>
+      <p style="margin:10px 13px; ">
+      <input name="date_to" type="date" style="width: 240; height: 34; border: 1px solid #ccc ; font-size: 13px; font-family:Arial"  value="<?php print $report->date_to ?>"></td>
       	</tr>
 
 		<tr>
@@ -289,8 +277,8 @@ if ( $report->KeyValue == 'id' ) { $thisValue = $report->id; } else { $thisValue
       	</tr>
 
 		<tr>
-    <td bgcolor="#FFFFFF" colspan="2">
-      <p style="margin: 0 5px"><font size="1" color="#800000">Report Manager
+    <td bgcolor="#FFFFFF" colspan="2" style="height: 50px;">
+      <p style="margin: 0 5px"><font size="3" color="#800000">Report Manager
 		URL's</font></td>
       	</tr>
 		<tr>
@@ -299,8 +287,8 @@ if ( $report->KeyValue == 'id' ) { $thisValue = $report->id; } else { $thisValue
       <img border='0' src='static/icon16/add.jpg' width='15' height='15' id="test" style="vertical-align: middle" >&nbsp; Add URL</button>
       </td>
       <td width="257" bgcolor="#FFFFFF">
-      <p style="margin: 0 5px">
-      <input name="AddURL" type="text" style="width: 240; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial"  value="<?php print $report->AddURL ?>">
+      <p style="margin: 10px 13px">
+      <input name="AddURL" type="text" style="width: 240; height: 34px; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial"  value="<?php print $report->AddURL ?>">
       </td>
       	</tr>
 		<tr>
@@ -309,8 +297,8 @@ if ( $report->KeyValue == 'id' ) { $thisValue = $report->id; } else { $thisValue
       <img border='0' src='static/icon16/edit.jpg' width='15' height='15' id="test" style="vertical-align: middle" >&nbsp; Edit URL</button>
       </td>
       <td width="257" bgcolor="#FFFFFF">
-      <p style="margin: 0 5px">
-      <input name="EditURL" type="text" style="width: 240; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial"  value="<?php print $report->EditURL ?>"></td>
+      <p style="margin: 10px 13px">
+      <input name="EditURL" type="text" style="width: 240; height: 34px; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial"  value="<?php print $report->EditURL ?>"></td>
       	</tr>
 
 		<tr>
@@ -319,23 +307,23 @@ if ( $report->KeyValue == 'id' ) { $thisValue = $report->id; } else { $thisValue
       <img border='0' src='static/icon16/delete.jpg' width='15' height='15' id="test" style="vertical-align: middle" >&nbsp; Delete URL</button>
       </td>
       <td width="257" bgcolor="#FFFFFF">
-      <p style="margin: 0 5px">
-      <input name="DeleteURL" type="text"  style="width: 240; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial"  value="<?php print $report->DeleteURL ?>"> </td>
+      <p style="margin: 10px 13px">
+      <input name="DeleteURL" type="text"  style="width: 240; height: 34px; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial"  value="<?php print $report->DeleteURL ?>"> </td>
       	</tr>
 		</table>
 </td>
       <td width="448" bgcolor="#FFFFFF" height="155" valign="top">
-      <table border="1" width="98%" cellspacing="1" style="font-size: 8pt; font-family: Arial; font-weight: bold; border-collapse: collapse" bordercolor="#C0C0C0">
-		<tr>
+      <table id="server-setting" border="1" width="98%" cellspacing="1" style="font-size: 8pt; font-family: Arial; font-weight: bold; border-collapse: collapse" bordercolor="#C0C0C0">
+		<tr style="height: 37px;">
       <td width="450" bgcolor="#F0F0F0" colspan="2">
-      <font size="1" color="#800000">Server Side Settings: </font></td>
+      <font size="3" color="#800000">Server Side Settings: </font></td>
   		</tr>
 		<tr>
       <td width="134" bgcolor="#FFFFFF">
       <p style="margin: 0 5px">DataTable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
       <td width="273" bgcolor="#FFFFFF">
-      <p style="margin: 0 5px">
-                           <input name="ReportTable" type="text" style="width: 200; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial; background-color:#F2F2F2 "  readonly="true" value="<?php print $report->ReportTable ?>" size="20">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <p style="margin: 10px 13px">
+                           <input name="ReportTable" type="text" style="width: 240px; height: 34px; border: 1px solid #C0C0C0 ; font-size: 13px; font-family:Arial; background-color:#F2F2F2 "  readonly="true" value="<?php print $report->ReportTable ?>" size="20">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 </td>
   		</tr>
@@ -343,18 +331,18 @@ if ( $report->KeyValue == 'id' ) { $thisValue = $report->id; } else { $thisValue
       <td width="110" bgcolor="#FFFFFF">
       <p style="margin: 0 5px">Union With&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
       <td width="319" bgcolor="#FFFFFF">
-      <p style="margin: 0 5px">
-             <input name="union_tables"  type="text" style="width: 150; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial"  value="<?php print $report->union_tables ?>"></td>
+      <p style="margin: 10px 13px">
+             <input name="union_tables"  type="text" style="width: 240px; height: 34px; border: 1px solid #C0C0C0 ; font-size: 13px; font-family:Arial"  value="<?php print $report->union_tables ?>"></td>
   		</tr>
 		<tr>
       <td width="134" bgcolor="#FFFFFF">
       <p style="margin: 0 5px">Key Values</td>
       <td width="273" bgcolor="#FFFFFF">
-      <p style="margin: 0 5px">
+      <p style="margin: 10px 13px">
       
-      <input name="KeyValue" type="text" style="width: 75; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial; background-color:#F2F2F2" readonly="true" value="<?php print $keyid ?>">
-      &nbsp;*&nbsp<input name="n/a1" type="text" style="width: 50; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial; background-color:#F2F2F2" readonly="true" value="<?php print $report->id ?>" size="20">
-      &nbsp;*&nbsp;<input name="n/a" type="text" style="width: 80; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial; background-color:#F2F2F2" readonly="true" value="<?php print $report->RecordNo ?>">
+      <input name="KeyValue" type="text" style="width: 75; height: 34px; text-align: center; border: 1px solid #C0C0C0 ; font-size: 13px; font-family:Arial; background-color:#F2F2F2" readonly="true" value="<?php print $keyid ?>">
+      &nbsp;*&nbsp<input name="n/a1" type="text" style="width: 50; text-align: center; height:34px; border: 1px solid #C0C0C0 ; font-size: 13px; font-family:Arial; background-color:#F2F2F2" readonly="true" value="<?php print $report->id ?>" size="20">
+      &nbsp;*&nbsp;<input name="n/a" type="text" style="width: 105px; text-align: center; height: 34px; border: 1px solid #C0C0C0 ; font-size: 13px; font-family:Arial; background-color:#F2F2F2" readonly="true" value="<?php print $report->RecordNo ?>">
 
 </td>
   		</tr>
@@ -362,16 +350,16 @@ if ( $report->KeyValue == 'id' ) { $thisValue = $report->id; } else { $thisValue
     <td style="width: 134px" bgcolor="#FFFFFF">
       <p style="margin:0 5px; ">Default URL</td>
       <td width="273" bgcolor="#FFFFFF">
-      <p style="margin:0 5px; ">
-      <input name="ReportOpenURL" type="text" style="width: 240; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial; background-color:#F2F2F2"  readonly="true" value='<?php print "reports_ajax.php?RecordNo=". $report->RecordNo ;  ?>'>
+      <p style="margin:10px 13px; ">
+      <input name="ReportOpenURL" type="text" style="width: 267; height: 34px; border: 1px solid #C0C0C0 ; font-size: 13px; font-family:Arial; background-color:#F2F2F2"  readonly="true" value='<?php print "reports_ajax.php?RecordNo=". $report->RecordNo ;  ?>'>
     </td>
       	</tr>
 		<tr>
     <td style="width: 134px" bgcolor="#FFFFFF">
       <p style="margin:0 5px; ">Custom URL</td>
       <td width="273" bgcolor="#FFFFFF">
-      <p style="margin:0 5px; ">
-      <input name="ReportCustomURL" type="text" style="width: 240; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial; background-color:#F2F2F2"   value='<?php print $report->ReportCustomURL ?>'>
+      <p style="margin:10px 13px; ">
+      <input name="ReportCustomURL" type="text" style="width: 240; height: 34px; border: 1px solid #C0C0C0 ; font-size: 13px; font-family:Arial; background-color:#F2F2F2"   value='<?php print $report->ReportCustomURL ?>'>
     </td>
       	</tr>
 
@@ -379,10 +367,10 @@ if ( $report->KeyValue == 'id' ) { $thisValue = $report->id; } else { $thisValue
       <td width="134" bgcolor="#FFFFFF">
       <p style="margin: 0 5px">Report Color</td>
       <td width="273" bgcolor="#FFFFFF" style="margin: 0 5px; ">
-      <p style="margin: 0 5px; ">
-                                                <input type="color" name="ReportColor" style="padding: 0px; width: 75; height: 20; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial; background-color:White" value="<?php print $report->ReportColor ?>">
+      <p style="margin: 10px 13px; ">
+                                                <input type="color" name="ReportColor" style="padding: 0px; width: 240; height: 34px; border: 1px solid #C0C0C0 ; font-size: 13px; font-family:Arial; background-color:White" value="<?php print $report->ReportColor ?>">
        
-     FontSize&nbsp;<select name="FontSize" style="font-size: 11px; font-family: Arial">
+     FontSize&nbsp;<select name="FontSize" style="font-size: 13px; font-family: Arial; height: 34px;">
 	<option value="<?php if ($report->id > 0) { echo $report->FontSize ;} Else { echo '9pt' ;} ?>"><?php if ($report->id > 0) { echo $report->FontSize ;} Else { echo '9pt' ;} ?></option>
 	<option>6pt</option>
 	<option>7pt</option>
@@ -402,11 +390,11 @@ if ( $report->KeyValue == 'id' ) { $thisValue = $report->id; } else { $thisValue
       <td width="134" bgcolor="#FFFFFF">
       <p style="margin: 0 5px">Show No Rows</td>
       <td width="273" bgcolor="#FFFFFF">
-      <p style="margin: 0 5px">
-      &nbsp;1:<input name="NoRows1" type="text" style="width: 30; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial" value="<?php print $report->NoRows1 ?>">
-      &nbsp;2:<input name="NoRows2" type="text" style="width: 30; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial" value="<?php print $report->NoRows2 ?>">
-      &nbsp;3:<input name="NoRows3" type="text" style="width: 30; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial" value="<?php print $report->NoRows3 ?>">
-      &nbsp;4:<input name="NoRows4" type="text" style="width: 30; height: 19; border: 1px solid #C0C0C0 ; font-size: 11px; font-family:Arial" value="<?php print $report->NoRows4 ?>">
+      <p style="margin: 10px 13px">
+      &nbsp;1:<input name="NoRows1" type="text" style="width: 30; text-align: center; height: 34px; border: 1px solid #C0C0C0 ; font-size: 13px; font-family:Arial" value="<?php print $report->NoRows1 ?>">
+      &nbsp;2:<input name="NoRows2" type="text" style="width: 30; text-align: center; height: 34px; border: 1px solid #C0C0C0 ; font-size: 13px; font-family:Arial" value="<?php print $report->NoRows2 ?>">
+      &nbsp;3:<input name="NoRows3" type="text" style="width: 30; text-align: center; height: 34px; border: 1px solid #C0C0C0 ; font-size: 13px; font-family:Arial" value="<?php print $report->NoRows3 ?>">
+      &nbsp;4:<input name="NoRows4" type="text" style="width: 30; text-align: center; height: 34px; border: 1px solid #C0C0C0 ; font-size: 13px; font-family:Arial" value="<?php print $report->NoRows4 ?>">
       (&nbsp;-1 = All )</td>
 
   		</tr>
@@ -415,15 +403,18 @@ if ( $report->KeyValue == 'id' ) { $thisValue = $report->id; } else { $thisValue
       <td width="134" bgcolor="#FFFFFF">
       <p style="margin: 0 5px">Print Settings</td>
       <td width="273" bgcolor="#FFFFFF" style="margin: 0 5px; ">
-      <p style="margin: 0 5px; ">
+      <p style="margin: 10px 13px; ">
 
-Orientation: &nbsp;<select name="PrintOrientation" style="font-size: 11px; font-family: Arial">
+Orientation: &nbsp;<select name="PrintOrientation" style="font-size: 13px; font-family: Arial; height: 34px;
+    width: 180px;">
 	<option value="<?php if ($report->id > 0) { echo $report->PrintOrientation ;} Else { echo 'landscape' ;} ?>"><?php if ($report->id > 0) { echo $report->PrintOrientation ;} Else { echo 'landscape' ;} ?></option>
 	<option>landscape</option>
 	<option>portrait</option>
 	</select>&nbsp;
 
-Paper:&nbsp;<select name="PrintPaper" style="font-size: 11px; font-family: Arial">
+Paper:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name="PrintPaper" style="font-size: 13px; font-family: Arial; height: 34px;
+    width: 180px; 
+    margin-top: 20px;">
 	<option value="<?php if ($report->id > 0) { echo $report->PrintPaper ;} Else { echo 'landscape' ;} ?>"><?php if ($report->id > 0) { echo $report->PrintPaper ;} Else { echo 'landscape' ;} ?></option>
 	<option>letter</option>
 	<option>legal</option>
@@ -453,10 +444,10 @@ Paper:&nbsp;<select name="PrintPaper" style="font-size: 11px; font-family: Arial
 		</table>
 	</td>
   </tr>
-	<tr>
-    <td bgcolor="#FFFFFF" valign="top" width="723" colspan="2">
+	<tr style="height: 50px;">
+    <td bgcolor="#FFFFFF" valign="top" width="723" colspan="2" style="padding: 7px;">
 	<p style="margin-top: 0; margin-bottom: 0">
-      <font size="1" color="#800000">Report Notes In Header </font></p>
+      <font size="3" color="#800000">Report Notes In Header </font></p>
 	<p style="margin-top: 0; margin-bottom: 0">
 	<textarea rows="1" name="ReportHeader" cols="100"><?php print $ReportHeader ?></textarea></td>
   </tr>
@@ -465,21 +456,21 @@ Paper:&nbsp;<select name="PrintPaper" style="font-size: 11px; font-family: Arial
 
 <!-- ***** FIELD LIST ************************************************************ -->
 
-<table border="1" bordercolor="Silver" cellpadding='0' style='width: 95%; margin-left: 5px; border-collapse: collapse; font-family: Arial; font-size:10pt; color:#0000FF; font-weight: normal'>
+<table id="reports_notes" border="1" bordercolor="Silver" cellpadding='0' style='width: 100%; margin-left: 5px; border-collapse: collapse; font-family: Arial; font-size:10pt; color:#FFF; font-weight: normal'>
 
 <tr>
-   <td style='height: 6px; font-family: Arial; font-size: 9pt; background-color: WhiteSmoke; text-align:left;'>Show</td>
-   <td style='height: 6px; font-family: Arial; font-size: 9pt; background-color: WhiteSmoke; text-align:left;'>Sort</td>
-   <td style='height: 6px; font-family: Arial; font-size: 9pt; background-color: WhiteSmoke; text-align:left;'>ColumnName</td>
-   <td style='height: 6px; font-family: Arial; font-size: 9pt; background-color: WhiteSmoke; text-align:left;'>ColumnLabel</td>
-   <td style='height: 6px; font-family: Arial; font-size: 9pt; background-color: WhiteSmoke; text-align:left;'>SUM</td>
-   <td style='height: 6px; font-family: Arial; font-size: 9pt; background-color: WhiteSmoke; text-align:left;'>SEL</td>
-   <td style='height: 6px; font-family: Arial; font-size: 9pt; background-color: WhiteSmoke; text-align:left;'>Align</td>
-   <td style='height: 6px; font-family: Arial; font-size: 9pt; background-color: WhiteSmoke; text-align:left;'>Width</td>
-   <td style='height: 6px; font-family: Arial; font-size: 9pt; background-color: WhiteSmoke; text-align:left;'>Value</td>
-   <td style='height: 6px; font-family: Arial; font-size: 9pt; background-color: WhiteSmoke; text-align:left;'>Color</td>
-   <td style='height: 6px; font-family: Arial; font-size: 9pt; background-color: WhiteSmoke; text-align:left;'>Opt</td>   
-   <td style='height: 6px; font-family: Arial; font-size: 9pt; background-color: WhiteSmoke; text-align:center;'>MANAGE</td>
+   <td style='font-family: Arial; font-size: 9pt; background-color: #343a40; text-align:center;'>Show</td>
+   <td style='font-family: Arial; font-size: 9pt; background-color: #343a40; text-align:center;'>Sort</td>
+   <td style='font-family: Arial; font-size: 9pt; background-color: #343a40; text-align:center;'>ColumnName</td>
+   <td style='font-family: Arial; font-size: 9pt; background-color: #343a40; text-align:center;'>ColumnLabel</td>
+   <td style='font-family: Arial; font-size: 9pt; background-color: #343a40; text-align:center;'>SUM</td>
+   <td style='font-family: Arial; font-size: 9pt; background-color: #343a40; text-align:center;'>SEL</td>
+   <td style='font-family: Arial; font-size: 9pt; background-color: #343a40; text-align:center;'>Align</td>
+   <td style='font-family: Arial; font-size: 9pt; background-color: #343a40; text-align:center;'>Width</td>
+   <td style='font-family: Arial; font-size: 9pt; background-color: #343a40; text-align:center;'>Value</td>
+   <td style='font-family: Arial; font-size: 9pt; background-color: #343a40; text-align:center;'>Color</td>
+   <td style='font-family: Arial; font-size: 9pt; background-color: #343a40; text-align:center;'>Opt</td>   
+   <td style='font-family: Arial; font-size: 9pt; background-color: #343a40; text-align:center;'>MANAGE</td>
 </tr>
 
 <?php
@@ -491,6 +482,7 @@ $color2 = "#F2F2F2";
 $row_count = 0;
  $stmt3= $pdo->query ("SELECT * FROM `reports_fields` WHERE `RecordNo` = '{$formid}' ORDER BY sort");
    while($row2=$stmt3->fetch(PDO::FETCH_ASSOC)){
+     //print_r($row2);
        $row_color = ($row_count % 2) ? $color1 : $color2;
        $style_default = "height:18px; padding-right: 3px; padding-left: 3px; border: 0px solid Silver; font-family: Arial; font-size: 9px; color: Black;";
 

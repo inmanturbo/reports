@@ -1,11 +1,10 @@
 <?php
-
-$c_username = "devwork";
-$c_password = "123456";
-$c_host= "192.168.1.2";
+$c_username = "root";
+$c_password = "";
+$c_host= "127.0.0.1";
 $c_database = "devwork";
 
-
+global $pdo;
 $params=array(
 'host'=>$c_host,
 'user'=>$c_username,
