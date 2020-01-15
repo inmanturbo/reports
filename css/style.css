@@ -2,19 +2,19 @@
     .toolbar {
         padding: 0;
         margin: 0;
-        width: 71.5%;
+        width: 52.5%;
         float:left;
         overflow: hidden;
         border: 0px solid blue;
     }
     .dt-buttons{
-        width: 11.5%;
+        width: 22.5%;
         float: right;
         border: 0px solid blue;
         margin: 0 0 0 0;
     }
     #example_filter{
-        width:13%; 
+        width:21%; 
         float:right;
         margin: 0 0 0 0;
         padding: 0;

@@ -16,15 +16,16 @@ $stmt2=select($formid,$table,$pdo);
 }
 
 if (isset($_POST['Save'])) {
-   if ($_POST['insert_id']) {
-     update($_POST,  $_POST['table_name'], $_POST['insert_id'],  $pdo );
+         if ($_POST['insert_id']) {
+     $update=update($_POST,  $_POST['table_name'], $_POST['insert_id'],  $pdo );
+    // print_r($update);die;
 
 // UPDATE COLUMN FIELD VALUES
  if($_POST['Save']) {
   //  var_dump($_POST['F']);
   foreach($_POST['F'] As $id => $value ) {
-
-// COLLECT INPUT VALUES
+    //print_r($value);
+      // COLLECT INPUT VALUES
    $sort       = $value['sort'];
    $FieldName  = $value['FieldName'];
    $LabelHead  = $value['LabelHead'];
@@ -58,7 +59,7 @@ if (isset($_POST['Save'])) {
 }}}
 
 else {
-     $insert_id =create( $_POST,$_POST['table_name'],  $pdo );
+      $insert_id =create($_POST,$_POST['table_name'],  $pdo );
 }
    $returnid = $_POST['RecordNo'];
 header("Location: ./reports_entry.php?RecordNo=$returnid");
@@ -94,13 +95,18 @@ var YesOrNo = (function() {
 <tr>
 <form name='Save' value='Save'  action="<?php print $_SERVER['PHP_SELF']?>" method="post" >
 <!-- HIDDEN FIELDS -->
-
 <?php
  $stmt= $pdo->query ("SELECT * FROM reports WHERE RecordNo = '{$formid}'");
    while($row=$stmt->fetch(PDO::FETCH_OBJ)){
  $report = $row;
+ //print_r($report);
 }
-if ( $report->KeyValue == 'id' ) { $thisValue = $report->id; } else { $thisValue = $report->RecordNo; }
+if ( $report->KeyValue == 'id' ) { 
+  $thisValue = $report->id; 
+}
+ else {
+   $thisValue = $report->RecordNo;
+   }
 
 ?>
 
@@ -449,7 +455,7 @@ Paper:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name="PrintP
 	<p style="margin-top: 0; margin-bottom: 0">
       <font size="3" color="#800000">Report Notes In Header </font></p>
 	<p style="margin-top: 0; margin-bottom: 0">
-	<textarea rows="1" name="ReportHeader" cols="100"><?php print $ReportHeader ?></textarea></td>
+	<textarea rows="1" name="ReportHeader" cols="100"><?php print $report->ReportHeader; ?></textarea></td>
   </tr>
   <tr>
     <td width="750" colspan="2" bgcolor="#FFFFFF">

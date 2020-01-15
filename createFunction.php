@@ -61,11 +61,12 @@ function update (array $data,string $table,int $id,PDO $pdo,  $debug = null)
 
       $STH = $pdo->prepare("DESCRIBE $table");
       $STH->execute();
-      $table_fields = $STH->fetchAll(PDO::FETCH_COLUMN);
-
-      $filterOutKeys = array_diff( array_keys($data), array_values($table_fields ));
-      $filterOutKeys = array_merge($filterOutKeys, ['id']);
-
+       $table_fields = $STH->fetchAll(PDO::FETCH_COLUMN);
+       //return $data;
+       //array_values($table_fields);
+        $filterOutKeys = array_diff( array_keys($data), array_values($table_fields ));
+         $filterOutKeys = array_merge($filterOutKeys, ['id']);
+          //array_flip( $filterOutKeys );
     if(isset($debug)){
 
      print_r($filterOutKeys);
@@ -79,9 +80,11 @@ function update (array $data,string $table,int $id,PDO $pdo,  $debug = null)
     
       foreach ($filteredArr as $key => $value)
       {
-        $setPart[] = "{$key} = :{$key}";
+        //return  $key;
+         $setPart[] = "{$key} = :{$key}";
         $bindings[":{$key}"] = $value;
       }
+      
     
       $bindings[":id"] = $id;
       try{

@@ -89,7 +89,7 @@ $ReportURL = $ReportURL??'';
           $background = "background-color:";
           $q = $_GET["q"];
           $table_name='reports';
-          $stmt=select($q,$table_name);
+          $stmt=select($q,$table_name,$pdo);
        } 
 else { 
  

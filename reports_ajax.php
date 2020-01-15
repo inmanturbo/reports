@@ -6,6 +6,7 @@ $formid = $_GET["RecordNo"];
 $report_stmt = $pdo->query ("SELECT * FROM `reports` WHERE RecordNo ='{$formid}' "); 
  while($row = $report_stmt->fetch(PDO::FETCH_OBJ)){
     $report = $row;
+    //print_r($report);
 }
 $str='';
 $Show1='';
@@ -17,6 +18,7 @@ $Show2='';
 $field_stmt = $pdo->query ("SELECT * FROM `reports_fields` WHERE RecordNo ='$formid' AND Active = 'checked' ORDER BY sort "); // AND NOT FieldName = 'MANAGE'
   while($field_row = $field_stmt->fetch(PDO::FETCH_OBJ)){
     $field = $field_row;
+    //print_r($field);
     $columns[] = [
         'data' => $field->FieldName
     ];
@@ -86,13 +88,11 @@ $c2= $pdo->query ("SELECT * FROM reports_fields WHERE RecordNo = '{$formid}' AND
 $x2++;
 }
 // END CALCULATION CODE
-
 ?>
 
 <body style="margin: 0">
 <html>
 <head>
-
 <!-- My link -->
   
 <script>
@@ -100,7 +100,7 @@ $x2++;
 $(document).ready(function() {
 
 
-    $('#example').DataTable( {
+    $('#example').DataTable({
     
   processing: true,  // ALERT DATA IS PROCESSING
   // stateSave: true,   // WILL SAVE LAST POSITION
@@ -133,9 +133,9 @@ $(document).ready(function() {
     buttons: [ 
                 // { className: 'qwMemo',     text: '<?php echo $report->ReportName ?>' },
                 
-                 {    extend: 'pageLength', className: 'qwButton', text: '<i class="fas fa-list-ol" style="font-size: 12pt; color: Blue; padding: 0px !important; margin-bottom: 4px !important; "></i>' },
-                 {    extend: 'collection', className: 'qwButton', buttons: ['csv', 'excel'],  text: '<i class="fas fa-download"  style="font-size: 12pt; color: Blue; padding: 0px !important; margin-bottom: 4px !important; ">&nbsp;</i>' },    
-                 { className: 'qwButton',   text: '<i class="fas fa-sync" style="font-size: 12pt; color: Blue; padding: 0px !important; margin-bottom: 4px !important; ">&nbsp;</i>', action: function ( ) {  window.open('/qwoffice/reports_ajax.php?RecordNo=<?php echo $formid; ?>','_self');  }  }, 
+                 { extend: 'pageLength', className: 'qwButton', text: '<i class="fas fa-list-ol" style="font-size: 12pt; color: Blue; padding: 0px !important; margin-bottom: 4px !important; "></i>' },
+                 { extend: 'collection', className: 'qwButton', buttons: ['csv', 'excel'],  text: '<i class="fas fa-download"  style="font-size: 12pt; color: Blue; padding: 0px !important; margin-bottom: 4px !important; ">&nbsp;</i>' },    
+                 { className: 'qwButton',   text: '<i class="fas fa-sync" style="font-size: 12pt; color: Blue; padding: 0px !important; margin-bottom: 4px !important; ">&nbsp;</i>', action: function ( ) {  window.open('reports_ajax.php?RecordNo=<?php echo $formid; ?>','_self');  }  }, 
                  // { className: 'qwButton',   text: '<i class="fas fa-plus-square" style="font-size: 10pt; color: ForestGreen; margin: 0px; " onclick="PopupCenterDual(\'gl_master_entry.php\',\'NIGRAPHIC\',\'750\',\'450\')">&nbsp;NEW</i>' },                      
                  //{ className: 'qwButton',   text: '<i class="fas fa-plus-square" style="font-size: 10pt; color: ForestGreen; margin: 0px; ">&nbsp;</i>NEW', action: function ( ) {  window.open('/qwoffice/gl_master_entry.php','_self'); }  }, 
                  //{ className: 'qwButton',   text: '<i class="fas fa-list"        style="font-size: 10pt; color: ForestGreen; margin: 0px; ">&nbsp;</i>SELECT ALL', action: function ( ) {  window.open('/qwoffice/gl_detail.php?all=all','_self');  }  },
@@ -187,7 +187,14 @@ $(document).ready(function() {
                          '$'+pageTotal.toFixed(2)
                      );
 
-<?php if (empty($Show1)) { echo "*/"; } ?>
+<?php if (empty($Show1)) { 
+    echo "*/"; 
+    //echo "fdddd";
+    }
+    else{
+        //print_r($Show1);
+    }
+    ?>
 
 // ***** END FIRST ROW CALCULATION CODE
 
@@ -257,6 +264,8 @@ $(document).ready(function() {
         
     } );
     var toolbar = document.getElementById('toolbarDiv').innerHTML;
+    //console.log(toolbar);
+    //alert(toolbar);
     $("div.toolbar").html(toolbar);
 } );//end document ready
 
@@ -294,8 +303,10 @@ th { background-color: <?php echo $report->ReportColor ?> !important; padding: 2
 <?php
 
 $rct = 1 ;
+
   while($tbody=$table3->fetch(PDO::FETCH_OBJ)){
-  
+    $opacity='';
+    $MainColor='';
   // KEEP WHITE BLANK FOR ALTERNATE ROW COLORS - ALLOW SOLID COLUMN COLOR
   if ( $tbody->RowColor == '#ffffff' ) { $ColumnColor = ""; } else { $ColumnColor = $tbody->RowColor; }
    echo" tr td:nth-child( $rct ) { text-align:$tbody->FieldAlign ;  background-color: $ColumnColor !important; opacity: $opacity: }"; $rct++ ;
@@ -360,8 +371,11 @@ table.dataTable thead th {
      <tr>
 <?php
    $table1= $pdo->query ("SELECT * FROM `reports_fields` WHERE RecordNo='{$formid}' AND Active = 'checked' ORDER BY sort");
-     while($thead = $table1->fetch(PDO::FETCH_OBJ)){ ?>
-
+     while($thead = $table1->fetch(PDO::FETCH_OBJ)){ 
+        //print_r($thead->LabelHead);
+       //echo "hcvcvcekk";
+         ?>
+            
           <th style='width: <?php echo  $thead->FieldWidth ?> px !important; text-align: $thead->FieldAlign !important'> <?php echo $thead->LabelHead ?> </th>
           
  <?php } ?>
@@ -372,7 +386,9 @@ table.dataTable thead th {
      <tr>
 <?php
    $table1= $pdo->query ("SELECT * FROM `reports_fields` WHERE RecordNo='{$formid}' AND Active = 'checked' ORDER BY sort");
-     while($thead = $table1->fetch(PDO::FETCH_OBJ)){ ?>
+     while($thead = $table1->fetch(PDO::FETCH_OBJ)){ 
+         //print_r($thead->FieldAlign);
+         ?>
 
         <th style="width: <?php echo $thead->FieldWidth ?> px !important; text-align:<?php echo  $thead->FieldAlign ?> !important"></th>
 
