@@ -8,10 +8,10 @@
         border: 0px solid blue;
     }
     .dt-buttons{
-        width: 22.5%;
+        width: 18.5%;
         float: right;
         border: 0px solid blue;
-        margin: 0 0 0 0;
+        margin: 10px 0 0 auto;
     }
     #example_filter{
         width:21%; 
@@ -191,9 +191,9 @@ table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
     background-color: rgba(0, 0, 0, 0.05);
 }
 #example_filter {
-    width: 21%;
+    width: 31%;
     float: right;
-    margin: 0 0 0 0;
+    margin: 5px 28px 0 1px;
     padding: 0;
     border: 0px solid blue;
     font-family: Arial !important;

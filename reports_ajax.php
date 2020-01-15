@@ -90,22 +90,15 @@ $x2++;
 }
 // END CALCULATION CODE
 ?>
-
 <body style="margin: 0">
 <html>
-
 <head>  
 <script>
-
 $(document).ready(function() {
-
-
     $('#example').DataTable({
-    
-  processing: true,  // ALERT DATA IS PROCESSING
+      processing: true,  // ALERT DATA IS PROCESSING
   // stateSave: true,   // WILL SAVE LAST POSITION
-  
-        ajax: {
+          ajax: {
             type: "POST",
             datatype: "json",
                 
@@ -115,7 +108,7 @@ $(document).ready(function() {
             // "url": "gl_detail_data.php"              
        },
       
-        columns: <?php echo json_encode( $columns ) ; ?>,
+        columns: <?php echo json_encode($columns) ; ?>,
 
 // ORDER DATA see reference https://datatables.net/examples/basic_init/multi_col_sort.html SAMPLE: [[ 7, 'asc' ], [ 7, 'des' ]],
           order: [ 1, 'asc' ],  
