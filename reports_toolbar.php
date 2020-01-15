@@ -7,7 +7,7 @@
 <!-- CUSTOM TOOLBAR ITMS LOADE IN THIS ORDER  -->
 
 <!-- PAGE TITLE FIRST--> 
-<div style="border: 1px solid DarkGrey; height: 43px !important; width: 572px; padding-left: 2px; padding-top: 4px; background-color: Blue ; opacity: .95; ">
+<div style="border: 1px solid DarkGrey; height: 43px !important; width: 100%; padding-left: 2px; padding-top: 4px; background-color: Blue ; opacity: .95; ">
    <i class="reportTitle" > GENERAL LEDGER</i>
 
    <?php if($report->date_range == 'yes'){ 
@@ -15,9 +15,9 @@
       ?>
     
 <!-- INPUT DATE RANGE  -->
-   <i class="toolbarContent" style="border: 0px solid DarkGrey; height: 16px !important; width: 75px; padding-left: 2px; padding-top: 4px; background-color: Gainsboro ;" > DATE FROM:</i>
+   <i class="toolbarContent" style="border: 0px solid DarkGrey; height: 29px !important; width: 75px; padding-left: 2px; padding-top: 4px; background-color: Gainsboro ;" > DATE FROM:</i>
      <input class="toolbarContent" style="border: 1px solid DarkGrey; width: 130px;"  type="date" name="qw_date1" value="<?php print $set->qw_date1; ?>"  >
-   <i class="toolbarContent" style="border: 1px solid DarkGrey; height: 16px !important; width: 60px; padding-left: 4px; padding-top: 4px; background-color: Gainsboro ;" > DATE TO:</i>   
+   <i class="toolbarContent" style="border: 1px solid DarkGrey; height: 24px !important; width: 60px; padding-left: 4px; padding-top: 4px; background-color: Gainsboro ;" > DATE TO:</i>   
      <input class="toolbarContent" style="border: 1px solid DarkGrey; width: 130px;"  type="date" name="qw_date2" value="<?php print $set->qw_date2; ?>"  > 
    <?php } ?>
 

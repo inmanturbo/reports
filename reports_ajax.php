@@ -18,7 +18,7 @@ $Show2='';
 $field_stmt = $pdo->query ("SELECT * FROM `reports_fields` WHERE RecordNo ='$formid' AND Active = 'checked' ORDER BY sort "); // AND NOT FieldName = 'MANAGE'
   while($field_row = $field_stmt->fetch(PDO::FETCH_OBJ)){
     $field = $field_row;
-    //print_r($field);
+    //print_r($field->FieldName);
     $columns[] = [
         'data' => $field->FieldName
     ];
@@ -54,7 +54,7 @@ if ( $report->NoRows4== '-1' ) { $R4 = "'Show All'";  } else { $R4 = "'" . $repo
 // NUMBER ROWS OUTPUT
 $rowNo = $report->NoRows1. ',' . $report->NoRows2. ',' . $report->NoRows3 . ',' . $report->NoRows4;
 $rowTx = $R1 . $R2 . $R3 . $R4 ;
-
+//print_r($rowNo);
 // $rowTx = "'" . $report->NoRows1. "rows'," . "'" . $report->NoRows2. "rows'," . "'" . $report->NoRows3 . "rows'," . "' Show All'" ;
 // echo $rowNo . "<br>" .  $rowTx;
 // END NUMNER OF ROWS
@@ -73,6 +73,7 @@ $c1= $pdo->query ("SELECT * FROM reports_fields WHERE RecordNo = '{$formid}' AND
 
   if($x1 == 0 && $row01->RowSumCK == 'checked'){
       $Show1 .= $row01->RowSumNO; $x1=1 ; // show the first row
+      //print_r($Show1);
 };
 $x1++;
 }
@@ -92,9 +93,8 @@ $x2++;
 
 <body style="margin: 0">
 <html>
-<head>
-<!-- My link -->
-  
+
+<head>  
 <script>
 
 $(document).ready(function() {
@@ -108,13 +108,9 @@ $(document).ready(function() {
         ajax: {
             type: "POST",
             datatype: "json",
-            
-  
-              
+                
               url: "http://localhost:8888/api/reports/<?php echo $c_database;?>/<?php echo $report->id; ?>/<?php echo $report->ReportTable; ?>/<?php echo $report->union_tables??''; ?>"        
-
-          
-                         
+ 
             // "dataSrc": "",            
             // "url": "gl_detail_data.php"              
        },
@@ -163,7 +159,7 @@ $(document).ready(function() {
                                  i : 0;
                      };
 
-
+                     
 <?php if (empty($Show1)) { echo "/*"; } ?>
 
                      // Total over all pages
@@ -268,8 +264,6 @@ $(document).ready(function() {
     //alert(toolbar);
     $("div.toolbar").html(toolbar);
 } );//end document ready
-
-
 </script>
 <!-- My Css -->
 
@@ -372,7 +366,7 @@ table.dataTable thead th {
 <?php
    $table1= $pdo->query ("SELECT * FROM `reports_fields` WHERE RecordNo='{$formid}' AND Active = 'checked' ORDER BY sort");
      while($thead = $table1->fetch(PDO::FETCH_OBJ)){ 
-        //print_r($thead->LabelHead);
+       // print_r($thead->LabelHead);
        //echo "hcvcvcekk";
          ?>
             

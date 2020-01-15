@@ -56,7 +56,9 @@ if (isset($_POST['Save'])) {
        RowColor   = '$RowColor',
        opacity   = '$opacity'              
        WHERE id   = '$id'");
-}}}
+}
+}
+}
 
 else {
       $insert_id =create($_POST,$_POST['table_name'],  $pdo );
